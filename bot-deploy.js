@@ -30,12 +30,16 @@ function deployToHeroku(accessToken) {
 			shell.exit(1);
 			return;
 		}
-
-		if (shell.exec("heroku config:set HEROKU_URL=$(heroku apps:info -s | grep https://mybotapppoc.herokuapp.com/ | cut -d= -f2)").code !== 0) {
+		
+		console.log('******before If');
+		
+		if (shell.exec("heroku config:set HEROKU_URL=$(heroku apps:info -s | grep https://mybotapppoc.herokuapp.com | cut -d= -f2)").code !== 0) {
 			shell.echo("Error: Heroku failed to expose the app URL");
 			shell.exit(1);
 			return;
 		}
+		
+		console.log('******after If');
 
 		if (shell.exec("heroku config:set VIBER_PUBLIC_ACCOUNT_ACCESS_TOKEN_KEY=\'" + accessToken + "\'").code !== 0) {
 			shell.echo("Error: Heroku set environment variable failed");
